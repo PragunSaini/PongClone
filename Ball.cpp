@@ -9,7 +9,7 @@ Ball::Ball(float wallMargin){
     sprite.setTexture(texture);
 
     // load the bounce sound files
-    bounceBuffer.loadFromFile("resources.bounce.ogg");
+    bounceBuffer.loadFromFile("resources/bounce.ogg");
     ballBounce.setBuffer(bounceBuffer);
 
     // get beginning velocity of ball
@@ -66,7 +66,15 @@ void Ball::paddleCollision(bool didCollide, float paddleYVelocity){
 }
 
 bool Ball::checkOutOfBounds(){
-    return sprite.getPosition().x < 0 || sprite.getPosition().x > parentWindow->getSize().x;
+    if (sprite.getPosition().x < 0){
+        scoreBlue++;
+        return true;
+    }
+    if (sprite.getPosition().x > parentWindow->getSize().x){
+        scoreRed++;
+        return true;
+    }
+    return false;
 }
 
 

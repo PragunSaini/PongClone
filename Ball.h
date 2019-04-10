@@ -7,10 +7,17 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <cmath>
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 // self defined header
 #include "Entity.h"
 #include "Paddle.h"
+
+// to track the scores
+extern int scoreRed;
+extern int scoreBlue;
 
 class Ball : public Entity {
 
@@ -33,16 +40,19 @@ class Ball : public Entity {
         sf::Clock clock3;
         sf::Clock lastCollision;
 
+
+        float RandomNumber(float Min, float Max){
+            return ((float(rand()) / float(RAND_MAX)) * (Max - Min)) ;
+        }
+
         // generate a random velocity of the ball
         float randomVelocity(int seed){
-            float finalVelocity;
-            srand(seed + clock3.restart().asMicroseconds());
-            int reducedSize = (rand()%10) + 1;
-            finalVelocity = (float)reducedSize / 10;
-            if (round(finalVelocity) == 0){
-                finalVelocity *= -1;
+            float speed = RandomNumber(2, 3) - RandomNumber(2, 3);
+            while(speed > -0.25 && speed < 0.25){
+                speed = RandomNumber(2, 3) - RandomNumber(2, 3);
             }
-            return finalVelocity;
+            cout << "Speed : " << speed << endl;
+            return speed;
         }
 
         // check for a wall collision

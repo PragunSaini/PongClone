@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <fstream>
+#include <string>
+using namespace std;
 
 // self defined headers
 #include "Ball.h"
@@ -18,11 +21,12 @@ class Game {
 
         // walls and their dimensions/color
         const sf::Vector2f WALL_DIMENSION = sf::Vector2f(WINDOW_WIDTH, 20);
-        const sf::Color WALL_COLOR = sf::Color(100, 100, 100);
+        const sf::Color WALL_COLOR = sf::Color(25, 255, 0);
 
         sf::RectangleShape topWall;
         sf::RectangleShape bottomWall;
         sf::RectangleShape dividerWall;
+        // sf::RectangleShape dividerWall;
 
         // Game entities
         Ball *ball;
@@ -33,7 +37,12 @@ class Game {
         const float PADDLE_MARGIN = 0.f;
 
         // game state
-        bool gameState; // false for stopped and true for running
+        bool gameState; // false for stopped and true for running.
+
+        // to display scores
+        sf::Font font;
+        sf::Text score_red;
+        sf::Text score_blue;
 
         // function to process events
         void processEvents(){
@@ -67,6 +76,13 @@ class Game {
             }
             paddleLeft->movePaddle();
             paddleRight->movePaddle();
+            score_red.setPosition(sf::Vector2f(WINDOW_WIDTH/4, WALL_DIMENSION.y + 20));
+            score_blue.setPosition(sf::Vector2f(2 * WINDOW_WIDTH/3, WALL_DIMENSION.y + 20));
+            string temp;
+            temp = "Score : " + to_string(scoreRed);
+            score_red.setString(temp);
+            temp = "Score : " + to_string(scoreBlue);
+            score_blue.setString(temp);
         }
 
         // display the new state on the screen
@@ -76,11 +92,15 @@ class Game {
             // draw boundary walls
             gameWindow.draw(topWall);
             gameWindow.draw(bottomWall);
+            gameWindow.draw(dividerWall);
 
             // draw the objects
             ball->draw();
             paddleLeft->draw();
             paddleRight->draw();
+
+            gameWindow.draw(score_blue);
+            gameWindow.draw(score_red);
 
             //display the window
             gameWindow.display();
