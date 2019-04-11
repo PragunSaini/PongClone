@@ -7,9 +7,6 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <cmath>
-#include <fstream>
-#include <iostream>
-using namespace std;
 
 // self defined header
 #include "Entity.h"
@@ -34,10 +31,7 @@ class Ball : public Entity {
         // wall margin to check wall collision
         float wallMargin;
 
-        // clocks to use to set speed, position, etc
-        sf::Clock clock1;
-        sf::Clock clock2;
-        sf::Clock clock3;
+        // clocks to use to check time since collision
         sf::Clock lastCollision;
 
 
@@ -46,12 +40,11 @@ class Ball : public Entity {
         }
 
         // generate a random velocity of the ball
-        float randomVelocity(int seed){
+        float randomVelocity(){
             float speed = RandomNumber(2, 3) - RandomNumber(2, 3);
             while(speed > -0.25 && speed < 0.25){
                 speed = RandomNumber(2, 3) - RandomNumber(2, 3);
             }
-            cout << "Speed : " << speed << endl;
             return speed;
         }
 

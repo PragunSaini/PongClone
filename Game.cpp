@@ -22,7 +22,7 @@ Game::Game(){
 
     dividerWall.setFillColor(sf::Color(25, 255, 0));
     dividerWall.setSize(sf::Vector2f(4, WINDOW_HEIGHT - 40));
-    dividerWall.setPosition(sf::Vector2f(WINDOW_WIDTH/2 - 2, 20));
+    dividerWall.setPosition(sf::Vector2f(WINDOW_WIDTH/2 - dividerWall.getSize().x, WALL_DIMENSION.y));
 
     // Create a ball
     ball = new Ball(WALL_DIMENSION.y);

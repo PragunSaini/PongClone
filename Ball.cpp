@@ -13,8 +13,8 @@ Ball::Ball(float wallMargin){
     ballBounce.setBuffer(bounceBuffer);
 
     // get beginning velocity of ball
-    dx = randomVelocity(clock1.restart().asMicroseconds());
-    dy = randomVelocity(clock2.restart().asMicroseconds());
+    dx = randomVelocity();
+    dy = randomVelocity();
 
     // store the wall margin value
     this->wallMargin = wallMargin;
@@ -58,9 +58,9 @@ void Ball::paddleCollision(bool didCollide, float paddleYVelocity){
     if (lastCollision.getElapsedTime().asSeconds() >= 1){
         hasCollidedWithPaddle = didCollide;
         // add part of paddle's velocity to the ball
-        dy = (dx * 1.05) + paddleYVelocity / 4;
+        dy = (dy * 1.2) + paddleYVelocity / 5;
         // reverse the direction
-        dx = dx * -1.05;
+        dx = dx * -1.2;
         lastCollision.restart();
     }
 }

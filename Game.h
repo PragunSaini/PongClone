@@ -3,8 +3,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <fstream>
-#include <string>
-using namespace std;
+// using namespace std;
 
 // self defined headers
 #include "Ball.h"
@@ -26,7 +25,6 @@ class Game {
         sf::RectangleShape topWall;
         sf::RectangleShape bottomWall;
         sf::RectangleShape dividerWall;
-        // sf::RectangleShape dividerWall;
 
         // Game entities
         Ball *ball;
@@ -49,9 +47,16 @@ class Game {
             sf::Event event;
             while(gameWindow.pollEvent(event)){
                 switch(event.type){
-                    case sf::Event::Closed:
-                        gameWindow.close();
-                        break;
+                    case sf::Event::Closed: {
+                            delete ball;
+                            delete paddleLeft;
+                            delete paddleRight;
+                            std::ofstream scoreOutput("resources/scores.txt", std::ios::app);
+                            scoreOutput << "> " << scoreRed << " | " << scoreBlue << std::endl;
+                            scoreOutput.close();
+                            gameWindow.close();
+                            break;
+                        }
                     case sf::Event::KeyPressed:
                         handleKeyboard(event.key.code, true);
                         break;
@@ -78,10 +83,10 @@ class Game {
             paddleRight->movePaddle();
             score_red.setPosition(sf::Vector2f(WINDOW_WIDTH/4, WALL_DIMENSION.y + 20));
             score_blue.setPosition(sf::Vector2f(2 * WINDOW_WIDTH/3, WALL_DIMENSION.y + 20));
-            string temp;
-            temp = "Score : " + to_string(scoreRed);
+            std::string temp;
+            temp = "Score : " + std::to_string(scoreRed);
             score_red.setString(temp);
-            temp = "Score : " + to_string(scoreBlue);
+            temp = "Score : " + std::to_string(scoreBlue);
             score_blue.setString(temp);
         }
 
