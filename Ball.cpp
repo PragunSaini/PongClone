@@ -47,6 +47,10 @@ bool Ball::checkPaddleCollision(Paddle *paddle){
     return getBounds().intersects(paddle->getBounds());
 }
 
+bool Ball::operator==(Paddle *paddle){
+    return getBounds().intersects(paddle->getBounds());
+}
+
 // check collision with the walls
 bool Ball::checkWallCollision(){
     return (sprite.getPosition().y <= wallMargin) ||

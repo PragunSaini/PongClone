@@ -89,6 +89,7 @@ class Ball : public Entity {
 
         // checkCollision with a paddle
         bool checkPaddleCollision(Paddle *paddle);
+        bool operator==(Paddle *);
 
         // change values on ball collision with a paddle
         void paddleCollision(bool collision, float paddleYVelocity);
